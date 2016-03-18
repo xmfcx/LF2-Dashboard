@@ -1,9 +1,0 @@
-D:\Projects\Visual Studio\LF2Dashboard\LF2Dashboard\bin\Debug\LF2Dashboard.exe.config
-D:\Projects\Visual Studio\LF2Dashboard\LF2Dashboard\bin\Debug\LF2Dashboard.exe
-D:\Projects\Visual Studio\LF2Dashboard\LF2Dashboard\bin\Debug\LF2Dashboard.pdb
-D:\Projects\Visual Studio\LF2Dashboard\LF2Dashboard\obj\Debug\LF2Dashboard.csprojResolveAssemblyReference.cache
-D:\Projects\Visual Studio\LF2Dashboard\LF2Dashboard\obj\Debug\LF2Dashboard.FormMain.resources
-D:\Projects\Visual Studio\LF2Dashboard\LF2Dashboard\obj\Debug\LF2Dashboard.Properties.Resources.resources
-D:\Projects\Visual Studio\LF2Dashboard\LF2Dashboard\obj\Debug\LF2Dashboard.csproj.GenerateResource.Cache
-D:\Projects\Visual Studio\LF2Dashboard\LF2Dashboard\obj\Debug\LF2Dashboard.exe
-D:\Projects\Visual Studio\LF2Dashboard\LF2Dashboard\obj\Debug\LF2Dashboard.pdb
