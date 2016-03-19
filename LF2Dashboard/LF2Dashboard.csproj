@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="lf2 dashboard.ico" />
+    <None Include="res\favicon.png" />
     <None Include="res\scoreBoard3.bmp" />
     <None Include="res\scoreBoard2.bmp" />
     <None Include="res\scoreBoard1.bmp" />

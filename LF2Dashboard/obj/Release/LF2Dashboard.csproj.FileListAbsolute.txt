@@ -6,3 +6,4 @@ D:\Projects\Visual Studio\LF2Dashboard\LF2Dashboard\obj\Release\LF2Dashboard.Pro
 D:\Projects\Visual Studio\LF2Dashboard\LF2Dashboard\obj\Release\LF2Dashboard.csproj.GenerateResource.Cache
 D:\Projects\Visual Studio\LF2Dashboard\LF2Dashboard\obj\Release\LF2Dashboard.exe
 D:\Projects\Visual Studio\LF2Dashboard\LF2Dashboard\obj\Release\LF2Dashboard.pdb
+D:\Projects\Visual Studio\LF2Dashboard\LF2Dashboard\obj\Release\LF2Dashboard.csprojResolveAssemblyReference.cache

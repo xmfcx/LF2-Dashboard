@@ -29,9 +29,12 @@ namespace LF2Dashboard
 		public int ActiveAmount;
 		private bool WeHaveTable;
 		public TimeSpan GameSession;
+		public bool StreamIsOn;
+		public Form MotherForm;
 
-		public Game(Process gameProcess, TableLayoutPanel panel)
+		public Game(Process gameProcess, TableLayoutPanel panel, Form form)
 		{
+			MotherForm = form;
 			Panel = panel;
 			GameProcess = gameProcess;
 			Initialise();
@@ -107,6 +110,9 @@ namespace LF2Dashboard
 				if (!WeHaveTable)
 				{
 					BuildTable();
+					Board.StreamIsOn = StreamIsOn;
+					Board.StreamIsOnChanged = true;
+					MotherForm.Size = new Size(MotherForm.Width,Board.Panel.MaximumSize.Height);
 					WeHaveTable = true;
 				}
 				else
@@ -147,7 +153,7 @@ namespace LF2Dashboard
 
 		public void BuildTable()
 		{
-			Board = new StatsPanel.ScoreBoard(Panel);
+			Board = new StatsPanel.ScoreBoard(Panel, MotherForm);
 			foreach (var player in Players)
 			{
 				if (player.IsActive)
@@ -163,6 +169,7 @@ namespace LF2Dashboard
 				}
 			}
 			Board.BuildTable();
+			Board.Panel.Refresh();
 		}
 		
 		public string Log()

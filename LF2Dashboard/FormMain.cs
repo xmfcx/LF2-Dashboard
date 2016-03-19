@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -53,24 +54,61 @@ namespace LF2Dashboard
 
 		void Restart()
 		{
-			var lf2Process = Process.GetProcessesByName("lf2").FirstOrDefault();
-			if (lf2Process != null)
+			Regex regex = new Regex(@"lf2(.*?)");
+			foreach (Process p in Process.GetProcesses("."))
 			{
-				game = new Game(lf2Process, tableLayoutPanel1);
-				lf2IsOn = true;
-			}
-			else
-			{
+				if (regex.Match(p.ProcessName).Success)
+				{
+					game = new Game(p, tableLayoutPanel1, this);
+					lf2IsOn = true;
+					break;
+				}
 				lf2IsOn = false;
 			}
 		}
 
 		private void CheckLf2()
 		{
-			var lf2Process = Process.GetProcessesByName("lf2").FirstOrDefault();
-			if (lf2Process == null)
+			Regex regex = new Regex(@"lf2(.*?)");
+			bool thereIsNoLf2 = true;
+			foreach (Process p in Process.GetProcesses("."))
+			{
+				if (regex.Match(p.ProcessName).Success)
+				{
+					thereIsNoLf2 = false;
+					break;
+				}
+			}
+			if (thereIsNoLf2)
 			{
 				lf2IsOn = false;
+			}
+		}
+
+		private void FormMain_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (lf2IsOn)
+			{
+				if (e.KeyChar.ToString().ToLower() == "s")
+				{
+					if (game.GameIsOn)
+					{
+						if (game.Board.StreamIsOn)
+						{
+							game.StreamIsOn = false;
+							game.Board.StreamIsOn = false;
+							Size = new Size(573, Size.Height);
+						}
+						else
+						{
+							game.StreamIsOn = true;
+							game.Board.StreamIsOn = true;
+							Size = new Size(387, Size.Height);
+							Console.Write("IT'S ON!");
+						}
+						game.Board.StreamIsOnChanged = true;
+					}
+				}
 			}
 		}
 	}

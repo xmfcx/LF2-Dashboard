@@ -50,6 +50,8 @@ namespace LF2Dashboard.ScoreBoard
 			Has = new HasBest();
 			Player = player;
 			SetControls();
+			Picture.Size = new Size(1, 1);
+			Picture.Margin = Padding.Empty;
 		}
 		public RealPlayer()
 		{
@@ -148,7 +150,9 @@ namespace LF2Dashboard.ScoreBoard
 
 			foreach (var label in labels)
 			{
-				label.MaximumSize = new Size(500, 22);
+				label.MaximumSize = new Size(500, 15);
+				label.Margin = Padding.Empty;
+				label.AutoSize = false;
 				if (label != Name)
 				{
 					label.BackColor = Color.Black;
@@ -156,11 +160,13 @@ namespace LF2Dashboard.ScoreBoard
 				}
 				else
 				{
-					label.Font = new Font(new FontFamily("Arial"), 9.8f);
+					label.Font = new Font(new FontFamily("Arial"), 8f);
+					label.MaximumSize = new Size(1000, 11);
 				}
 			}
 			ImaginaryName.ForeColor = Color.White;
-			
+
+
 			ImaginaryName.BackColor = Color.Transparent;
 			ImaginaryGray1.BackColor = Color.FromArgb(255, 44, 47, 61);
 			ImaginaryGray2.BackColor = Color.FromArgb(255, 44, 47, 61);
