@@ -97,13 +97,11 @@ namespace LF2Dashboard
 						{
 							game.StreamIsOn = false;
 							game.Board.StreamIsOn = false;
-							Size = new Size(573, Size.Height);
 						}
 						else
 						{
 							game.StreamIsOn = true;
 							game.Board.StreamIsOn = true;
-							Size = new Size(387, Size.Height);
 							Console.Write("IT'S ON!");
 						}
 						game.Board.StreamIsOnChanged = true;

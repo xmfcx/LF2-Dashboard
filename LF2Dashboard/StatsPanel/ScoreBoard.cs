@@ -377,7 +377,7 @@ namespace LF2Dashboard.StatsPanel
 						PlayerRowPanels[i].ColumnStyles[10] = new ColumnStyle(SizeType.Percent, 8);
 						PlayerRowPanels[i].ColumnStyles[12] = new ColumnStyle(SizeType.Percent, 4);
 					}
-
+					MotherForm.Size = new Size(475, Panel.MaximumSize.Height);
 				}
 				else
 				{
@@ -415,8 +415,8 @@ namespace LF2Dashboard.StatsPanel
 						PlayerRowPanels[i].ColumnStyles[10] = new ColumnStyle(SizeType.Percent, 12);
 						PlayerRowPanels[i].ColumnStyles[12] = new ColumnStyle(SizeType.Percent, 12);
 					}
+					MotherForm.Size = new Size(550, Panel.MaximumSize.Height);
 				}
-				MotherForm.Size = new Size(MotherForm.Width, Panel.MaximumSize.Height);
 				StreamIsOnChanged = false;
 			}
 		}

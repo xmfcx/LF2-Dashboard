@@ -111,8 +111,8 @@ namespace LF2Dashboard
 				{
 					BuildTable();
 					Board.StreamIsOn = StreamIsOn;
-					Board.StreamIsOnChanged = true;
 					MotherForm.Size = new Size(MotherForm.Width,Board.Panel.MaximumSize.Height);
+					Board.StreamIsOnChanged = true;
 					WeHaveTable = true;
 				}
 				else
