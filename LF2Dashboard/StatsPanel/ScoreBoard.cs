@@ -377,10 +377,12 @@ namespace LF2Dashboard.StatsPanel
 						PlayerRowPanels[i].ColumnStyles[10] = new ColumnStyle(SizeType.Percent, 8);
 						PlayerRowPanels[i].ColumnStyles[12] = new ColumnStyle(SizeType.Percent, 4);
 					}
-					MotherForm.Size = new Size(475, Panel.MaximumSize.Height);
+					MotherForm.Size = new Size(475, 284);
+					MotherForm.BackColor = Color.FromArgb(255, 2, 0, 44);
 				}
 				else
 				{
+					MotherForm.BackColor = Color.Black;
 					MidMotherPanel.ColumnStyles[0] = new ColumnStyle(SizeType.Absolute, muhDic["MidMotherWidth"]);
 					MidMotherPanel.ColumnStyles[2] = new ColumnStyle(SizeType.Absolute, muhDic["MidMotherWidth"]);
 					Panel.MaximumSize = new Size(1000, muhDic["maxHeight"]);
