@@ -1,25 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using LF2Dashboard.Properties;
-using LF2Dashboard.ScoreBoard;
+using LF2Dashboard.StatsPanel;
 
 namespace LF2Dashboard
 {
 	class Game
 	{
 		public Character[] Chars;
-		private TableLayoutPanel Panel;
+		private readonly TableLayoutPanel panel;
 		public StatsPanel.ScoreBoard Board;
 		public Process GameProcess;
-		public int Minutes;
-		public int Seconds;
 		public Player[] Players;
 		public ComPlayer[] CPlayers;
 		public int PlayerAmount;
@@ -27,7 +20,7 @@ namespace LF2Dashboard
 		public int GameState;
 		public bool GameOpenedFully;
 		public int ActiveAmount;
-		private bool WeHaveTable;
+		private bool weHaveTable;
 		public TimeSpan GameSession;
 		public bool StreamIsOn;
 		public Form MotherForm;
@@ -35,7 +28,7 @@ namespace LF2Dashboard
 		public Game(Process gameProcess, TableLayoutPanel panel, Form form)
 		{
 			MotherForm = form;
-			Panel = panel;
+			this.panel = panel;
 			GameProcess = gameProcess;
 			Initialise();
 		}
@@ -43,7 +36,7 @@ namespace LF2Dashboard
 		public void Update()
 		{
 			GameState = BitConverter.ToInt16(
-				Hookers.ReadMemory(GameProcess, AddressTable.GameState, 2), 0);
+				Hooker.ReadMemory(GameProcess, AddressTable.GameState, 2), 0);
 			GameIsOn = GameState == 0;
 
 			if (GameState == 1 && !GameOpenedFully)
@@ -60,9 +53,9 @@ namespace LF2Dashboard
 				CPlayers[i].Update();
 				if (GameIsOn)
 				{
-					byte activity = Hookers.ReadMemory(GameProcess, AddressTable.PlayerInGame[i], 1)[0];
+					byte activity = Hooker.ReadMemory(GameProcess, AddressTable.PlayerInGame[i], 1)[0];
 					Players[i].IsActive = activity == 1;
-					activity = Hookers.ReadMemory(GameProcess, AddressTable.CPlayerInGame[i], 1)[0];
+					activity = Hooker.ReadMemory(GameProcess, AddressTable.CPlayerInGame[i], 1)[0];
 					CPlayers[i].IsActive = activity == 1;
 				}
 				else
@@ -104,56 +97,56 @@ namespace LF2Dashboard
 			if (GameIsOn)
 			{
 				var timyTime = BitConverter.ToInt32(
-				Hookers.ReadMemory(GameProcess, AddressTable.Time, 4), 0);
+				Hooker.ReadMemory(GameProcess, AddressTable.Time, 4), 0);
 				GameSession = TimeSpan.FromSeconds(timyTime / 30);
 
-				if (!WeHaveTable)
+				if (!weHaveTable)
 				{
 					BuildTable();
 					Board.StreamIsOn = StreamIsOn;
 					MotherForm.Size = new Size(MotherForm.Width,Board.Panel.MaximumSize.Height);
 					Board.StreamIsOnChanged = true;
-					WeHaveTable = true;
+					weHaveTable = true;
 				}
 				else
 				{
-					RealPlayer.Scores BestScore = new RealPlayer.Scores();
+					RealPlayer.Scores bestScore = new RealPlayer.Scores();
 					foreach (var realPlayer in Board.Players)
 					{
-						BestScore.Kill = comparer(realPlayer.MyScores.Kill, BestScore.Kill);
-						BestScore.Attack = comparer(realPlayer.MyScores.Attack, BestScore.Attack);
-						BestScore.HpLost = comparer(realPlayer.MyScores.HpLost, BestScore.HpLost);
-						BestScore.MpUsage = comparer(realPlayer.MyScores.MpUsage, BestScore.MpUsage);
-						BestScore.Picking = comparer(realPlayer.MyScores.Picking, BestScore.Picking);
+						bestScore.Kill = Comparer(realPlayer.MyScores.Kill, bestScore.Kill);
+						bestScore.Attack = Comparer(realPlayer.MyScores.Attack, bestScore.Attack);
+						bestScore.HpLost = Comparer(realPlayer.MyScores.HpLost, bestScore.HpLost);
+						bestScore.MpUsage = Comparer(realPlayer.MyScores.MpUsage, bestScore.MpUsage);
+						bestScore.Picking = Comparer(realPlayer.MyScores.Picking, bestScore.Picking);
 					}
 					foreach (var realPlayer in Board.Players)
 					{
-						realPlayer.Has.Kill = realPlayer.MyScores.Kill == BestScore.Kill;
-						realPlayer.Has.Attack = realPlayer.MyScores.Attack == BestScore.Attack;
-						realPlayer.Has.HpLost = realPlayer.MyScores.HpLost == BestScore.HpLost;
-						realPlayer.Has.MpUsage = realPlayer.MyScores.MpUsage == BestScore.MpUsage;
-						realPlayer.Has.Picking = realPlayer.MyScores.Picking == BestScore.Picking;
+						realPlayer.Has.Kill = realPlayer.MyScores.Kill == bestScore.Kill;
+						realPlayer.Has.Attack = realPlayer.MyScores.Attack == bestScore.Attack;
+						realPlayer.Has.HpLost = realPlayer.MyScores.HpLost == bestScore.HpLost;
+						realPlayer.Has.MpUsage = realPlayer.MyScores.MpUsage == bestScore.MpUsage;
+						realPlayer.Has.Picking = realPlayer.MyScores.Picking == bestScore.Picking;
 					}
 				}
 			}
 			else
 			{
-				WeHaveTable = false;
+				weHaveTable = false;
 			}
-			if (WeHaveTable)
+			if (weHaveTable)
 			{
 				Board.Update(GameSession);
 			}
 		}
 
-		private int comparer(int a, int b)
+		private int Comparer(int a, int b)
 		{
 			return a > b ? a : b;
 		}
 
 		public void BuildTable()
 		{
-			Board = new StatsPanel.ScoreBoard(Panel, MotherForm);
+			Board = new StatsPanel.ScoreBoard(panel, MotherForm);
 			foreach (var player in Players)
 			{
 				if (player.IsActive)
@@ -231,8 +224,7 @@ namespace LF2Dashboard
 			Chars = new Character[24];
 			for (int i = 0; i < Chars.Length; i++)
 			{
-				Chars[i] = new Character();
-				Chars[i].Address = AddressTable.DataFiles[i];
+				Chars[i] = new Character {Address = AddressTable.DataFiles[i]};
 			}
 			SetCharList();
 		}

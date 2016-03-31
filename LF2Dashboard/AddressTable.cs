@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LF2Dashboard
 {
@@ -67,11 +63,11 @@ namespace LF2Dashboard
 		public static void FillPointers(Process gameProcess)
 		{
 			int dataAddress = BitConverter.ToInt32(
-				Hookers.ReadMemory(gameProcess, DataPointer, 4), 0);
+				Hooker.ReadMemory(gameProcess, DataPointer, 4), 0);
 			for (int i = 0; i < DataFiles.Length; i++)
 			{
 				DataFiles[i] = BitConverter.ToInt32(
-				Hookers.ReadMemory(gameProcess, dataAddress + i * 4, 4), 0);
+				Hooker.ReadMemory(gameProcess, dataAddress + i * 4, 4), 0);
 			}
 		}
 	}

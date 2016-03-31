@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Net.Mime;
 using System.Windows.Forms;
 using LF2Dashboard.Properties;
-using LF2Dashboard.ScoreBoard;
 
 namespace LF2Dashboard.StatsPanel
 {
@@ -23,9 +21,9 @@ namespace LF2Dashboard.StatsPanel
 		public TableLayoutPanel MidMotherPanel;
 		public TimeSpan Time;
 		public Label TimLabel;
-		public Dictionary<string, int> muhDic;
+		public Dictionary<string, int> MuhDic;
 		private LinkLabel lable;
-		private RealPlayer ImaginaryPlayer;
+		private RealPlayer imaginaryPlayer;
 		public Form MotherForm;
 
 		public ScoreBoard(TableLayoutPanel panel, Form form)
@@ -38,15 +36,15 @@ namespace LF2Dashboard.StatsPanel
 
 		public void BuildTable()
 		{
-			muhDic = new Dictionary<string, int>();
-			muhDic.Add("PanelRow1Size", 22);
-			muhDic.Add("PlayerRowSize", 50);
-			muhDic.Add("TitlesRowSize", 34);
-			muhDic.Add("MidMotherWidth", 8);
-			muhDic.Add("maxHeight", 120 + Players.Count*45);
+			MuhDic = new Dictionary<string, int>();
+			MuhDic.Add("PanelRow1Size", 22);
+			MuhDic.Add("PlayerRowSize", 50);
+			MuhDic.Add("TitlesRowSize", 34);
+			MuhDic.Add("MidMotherWidth", 8);
+			MuhDic.Add("maxHeight", 120 + Players.Count*45);
 
 
-			ImaginaryPlayer = new RealPlayer();
+			imaginaryPlayer = new RealPlayer();
 			TopPanel = new TableLayoutPanel();
 			MidPanel = new TableLayoutPanel();
 			MidTopPanel = new TableLayoutPanel();
@@ -54,24 +52,24 @@ namespace LF2Dashboard.StatsPanel
 			BotPanel = new TableLayoutPanel();
 			MidMotherPanel = new TableLayoutPanel();
 
-			Panel.MaximumSize = new Size(1000, muhDic["maxHeight"]);
-			List<TableLayoutPanel> Panels = new List<TableLayoutPanel>();
-			Panels.Add(Panel);
-			Panels.Add(TopPanel);
-			Panels.Add(MidMotherPanel);
-			Panels.Add(MidPanel);
-			Panels.Add(MidTopPanel);
+			Panel.MaximumSize = new Size(1000, MuhDic["maxHeight"]);
+			List<TableLayoutPanel> panels = new List<TableLayoutPanel>();
+			panels.Add(Panel);
+			panels.Add(TopPanel);
+			panels.Add(MidMotherPanel);
+			panels.Add(MidPanel);
+			panels.Add(MidTopPanel);
 			for (int i = 0; i < PlayerRowPanels.Length; i++)
 			{
 				PlayerRowPanels[i] = new TableLayoutPanel();
-				Panels.Add(PlayerRowPanels[i]);
+				panels.Add(PlayerRowPanels[i]);
 			}
-			Panels.Add(BotPanel);
-			for (int i = 0; i < Panels.Count; i++)
+			panels.Add(BotPanel);
+			for (int i = 0; i < panels.Count; i++)
 			{
-				Panels[i].BorderStyle = BorderStyle.None;
-				Panels[i].Margin = Padding.Empty;
-				Panels[i].Dock = DockStyle.Fill;
+				panels[i].BorderStyle = BorderStyle.None;
+				panels[i].Margin = Padding.Empty;
+				panels[i].Dock = DockStyle.Fill;
 			}
 
 			Panel.Controls.Clear();
@@ -79,21 +77,21 @@ namespace LF2Dashboard.StatsPanel
 			Panel.ColumnCount = 0;
 			Panel.RowStyles.Clear();
 			Panel.ColumnStyles.Clear();
-			Panel.RowStyles.Add(new RowStyle(SizeType.Absolute, muhDic["PanelRow1Size"]));
+			Panel.RowStyles.Add(new RowStyle(SizeType.Absolute, MuhDic["PanelRow1Size"]));
 			Panel.RowStyles.Add(new RowStyle(SizeType.Percent, 50));
 			Panel.RowStyles.Add(new RowStyle(SizeType.Absolute, 27));
 			Panel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
 
 			MidMotherPanel.ColumnCount = 3;
 			MidMotherPanel.RowStyles.Add(new RowStyle(SizeType.Percent,1));
-			MidMotherPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, muhDic["MidMotherWidth"]));
+			MidMotherPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, MuhDic["MidMotherWidth"]));
 			MidMotherPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,50));
-			MidMotherPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, muhDic["MidMotherWidth"]));
+			MidMotherPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, MuhDic["MidMotherWidth"]));
 			MidMotherPanel.Controls.Add(MidPanel, 1, 0);
 
 			MidTopPanel.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 
-			MidPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, muhDic["TitlesRowSize"]));
+			MidPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, MuhDic["TitlesRowSize"]));
 			MidPanel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
 			MidPanel.MaximumSize = new Size(1000, 394);
 
@@ -158,8 +156,7 @@ namespace LF2Dashboard.StatsPanel
 				Text = "http://www.lf-empire.de/forum/",
 				Links =
 				{
-					new LinkLabel.Link()
-					{LinkData = "http://www.lf-empire.de/forum/"}
+					new LinkLabel.Link {LinkData = "http://www.lf-empire.de/forum/"}
 				},
 
 				Anchor = AnchorStyles.Left | AnchorStyles.Right,
@@ -175,38 +172,38 @@ namespace LF2Dashboard.StatsPanel
 
 			BotPanel.Controls.Add(lable, 1, 0);
 
-			ImaginaryPlayer.ImaginaryName.Text = "Player";
-			ImaginaryPlayer.Kill.Text = "Kill";
-			ImaginaryPlayer.Attack.Text = "Attack";
-			ImaginaryPlayer.HpLost.Text = "HP Lost";
-			ImaginaryPlayer.MpUsage.Text = "MP Usage";
-			ImaginaryPlayer.Picking.Text = "Picking";
-			ImaginaryPlayer.Status.Text = "Status";
+			imaginaryPlayer.ImaginaryName.Text = "Player";
+			imaginaryPlayer.Kill.Text = "Kill";
+			imaginaryPlayer.Attack.Text = "Attack";
+			imaginaryPlayer.HpLost.Text = "HP Lost";
+			imaginaryPlayer.MpUsage.Text = "MP Usage";
+			imaginaryPlayer.Picking.Text = "Picking";
+			imaginaryPlayer.Status.Text = "Status";
 
-			var ImaginLabels = new List<Label>();
+			var imaginLabels = new List<Label>();
 
-			ImaginLabels.Add(ImaginaryPlayer.ImaginaryName);
-			ImaginLabels.Add(ImaginaryPlayer.Kill);
-			ImaginLabels.Add(ImaginaryPlayer.Attack);
-			ImaginLabels.Add(ImaginaryPlayer.HpLost);
-			ImaginLabels.Add(ImaginaryPlayer.MpUsage);
-			ImaginLabels.Add(ImaginaryPlayer.Picking);
-			ImaginLabels.Add(ImaginaryPlayer.Status);
+			imaginLabels.Add(imaginaryPlayer.ImaginaryName);
+			imaginLabels.Add(imaginaryPlayer.Kill);
+			imaginLabels.Add(imaginaryPlayer.Attack);
+			imaginLabels.Add(imaginaryPlayer.HpLost);
+			imaginLabels.Add(imaginaryPlayer.MpUsage);
+			imaginLabels.Add(imaginaryPlayer.Picking);
+			imaginLabels.Add(imaginaryPlayer.Status);
 
-			for (int i = 0; i < ImaginLabels.Count; i++)
+			for (int i = 0; i < imaginLabels.Count; i++)
 			{
-				ImaginLabels[i].BackColor = Color.Transparent;
-				ImaginLabels[i].Font = new Font(new FontFamily("Arial"),10);
-				ImaginLabels[i].AutoSize = false;
-				ImaginLabels[i].MaximumSize = new Size(500,18);
+				imaginLabels[i].BackColor = Color.Transparent;
+				imaginLabels[i].Font = new Font(new FontFamily("Arial"),10);
+				imaginLabels[i].AutoSize = false;
+				imaginLabels[i].MaximumSize = new Size(500,18);
 			}
 
-			ImaginaryPlayer.Kill.ForeColor = ImaginaryPlayer.MightyColors[4];
-			ImaginaryPlayer.Attack.ForeColor = ImaginaryPlayer.MightyColors[4];
-			ImaginaryPlayer.HpLost.ForeColor = ImaginaryPlayer.MightyColors[5];
-			ImaginaryPlayer.MpUsage.ForeColor = ImaginaryPlayer.MightyColors[5];
-			ImaginaryPlayer.Picking.ForeColor = ImaginaryPlayer.MightyColors[6];
-			ImaginaryPlayer.Status.ForeColor = ImaginaryPlayer.MightyColors[7];
+			imaginaryPlayer.Kill.ForeColor = imaginaryPlayer.MightyColors[4];
+			imaginaryPlayer.Attack.ForeColor = imaginaryPlayer.MightyColors[4];
+			imaginaryPlayer.HpLost.ForeColor = imaginaryPlayer.MightyColors[5];
+			imaginaryPlayer.MpUsage.ForeColor = imaginaryPlayer.MightyColors[5];
+			imaginaryPlayer.Picking.ForeColor = imaginaryPlayer.MightyColors[6];
+			imaginaryPlayer.Status.ForeColor = imaginaryPlayer.MightyColors[7];
 
 			MidTopPanel.ColumnCount = 7;
 			MidTopPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 19));
@@ -218,19 +215,19 @@ namespace LF2Dashboard.StatsPanel
 			MidTopPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12));
 
 			int col = 0;
-			MidTopPanel.Controls.Add(ImaginaryPlayer.ImaginaryName, col, 0);
+			MidTopPanel.Controls.Add(imaginaryPlayer.ImaginaryName, col, 0);
 			col++;
-			MidTopPanel.Controls.Add(ImaginaryPlayer.Kill, col, 0);
+			MidTopPanel.Controls.Add(imaginaryPlayer.Kill, col, 0);
 			col++;
-			MidTopPanel.Controls.Add(ImaginaryPlayer.Attack, col, 0);
+			MidTopPanel.Controls.Add(imaginaryPlayer.Attack, col, 0);
 			col++;
-			MidTopPanel.Controls.Add(ImaginaryPlayer.HpLost, col, 0);
+			MidTopPanel.Controls.Add(imaginaryPlayer.HpLost, col, 0);
 			col++;
-			MidTopPanel.Controls.Add(ImaginaryPlayer.MpUsage, col, 0);
+			MidTopPanel.Controls.Add(imaginaryPlayer.MpUsage, col, 0);
 			col++;
-			MidTopPanel.Controls.Add(ImaginaryPlayer.Picking, col, 0);
+			MidTopPanel.Controls.Add(imaginaryPlayer.Picking, col, 0);
 			col++;
-			MidTopPanel.Controls.Add(ImaginaryPlayer.Status, col, 0);
+			MidTopPanel.Controls.Add(imaginaryPlayer.Status, col, 0);
 
 
 			for (int row = 0; row < Players.Count; row++)
@@ -278,7 +275,7 @@ namespace LF2Dashboard.StatsPanel
 				PlayerRowPanels[row].ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12));
 
 				PlayerRowPanels[row].Dock = DockStyle.Fill;
-				MidPanel.RowStyles.Add(new RowStyle(SizeType.Percent, muhDic["PlayerRowSize"]));
+				MidPanel.RowStyles.Add(new RowStyle(SizeType.Percent, MuhDic["PlayerRowSize"]));
 				MidPanel.Controls.Add(PlayerRowPanels[row], 0, row + 1);
 			}
 
@@ -313,8 +310,8 @@ namespace LF2Dashboard.StatsPanel
 
 		private void TopPanelOnCellPaint(object sender, TableLayoutCellPaintEventArgs e)
 		{
-			Color TopColor = Color.FromArgb(255, 17, 40, 108);
-			using (var b = new SolidBrush(TopColor))
+			Color topColor = Color.FromArgb(255, 17, 40, 108);
+			using (var b = new SolidBrush(topColor))
 			{
 				e.Graphics.FillRectangle(b, e.CellBounds);
 			}
@@ -322,8 +319,8 @@ namespace LF2Dashboard.StatsPanel
 
 		private void MidPanelOnCellPaint(object sender, TableLayoutCellPaintEventArgs e)
 		{
-			Color MidColor = Color.FromArgb(255, 50, 77, 154);
-			using (var b = new SolidBrush(MidColor))
+			Color midColor = Color.FromArgb(255, 50, 77, 154);
+			using (var b = new SolidBrush(midColor))
 			{
 				e.Graphics.FillRectangle(b, e.CellBounds);
 			}
@@ -355,13 +352,13 @@ namespace LF2Dashboard.StatsPanel
 					Panel.Dock = DockStyle.None;
 					Panel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 
-					ImaginaryPlayer.ImaginaryName.Text = "Player";
-					ImaginaryPlayer.Kill.Text = "Kill";
-					ImaginaryPlayer.Attack.Text = "Atk";
-					ImaginaryPlayer.HpLost.Text = "HP";
-					ImaginaryPlayer.MpUsage.Text = "MP";
-					ImaginaryPlayer.Picking.Text = "Pick";
-					ImaginaryPlayer.Status.Text = "Stat";
+					imaginaryPlayer.ImaginaryName.Text = "Player";
+					imaginaryPlayer.Kill.Text = "Kill";
+					imaginaryPlayer.Attack.Text = "Atk";
+					imaginaryPlayer.HpLost.Text = "HP";
+					imaginaryPlayer.MpUsage.Text = "MP";
+					imaginaryPlayer.Picking.Text = "Pick";
+					imaginaryPlayer.Status.Text = "Stat";
 
 					MidTopPanel.ColumnStyles[0] = new ColumnStyle(SizeType.Percent, 8);
 					MidTopPanel.ColumnStyles[1] = new ColumnStyle(SizeType.Percent, 9);
@@ -383,25 +380,25 @@ namespace LF2Dashboard.StatsPanel
 				else
 				{
 					MotherForm.BackColor = Color.Black;
-					MidMotherPanel.ColumnStyles[0] = new ColumnStyle(SizeType.Absolute, muhDic["MidMotherWidth"]);
-					MidMotherPanel.ColumnStyles[2] = new ColumnStyle(SizeType.Absolute, muhDic["MidMotherWidth"]);
-					Panel.MaximumSize = new Size(1000, muhDic["maxHeight"]);
+					MidMotherPanel.ColumnStyles[0] = new ColumnStyle(SizeType.Absolute, MuhDic["MidMotherWidth"]);
+					MidMotherPanel.ColumnStyles[2] = new ColumnStyle(SizeType.Absolute, MuhDic["MidMotherWidth"]);
+					Panel.MaximumSize = new Size(1000, MuhDic["maxHeight"]);
 					lable.Text = "http://www.lf-empire.de/forum/";
-					Panel.RowStyles[0] = new RowStyle(SizeType.Absolute, muhDic["PanelRow1Size"]);
-					MidPanel.RowStyles[0] = new RowStyle(SizeType.Absolute, muhDic["TitlesRowSize"]);
+					Panel.RowStyles[0] = new RowStyle(SizeType.Absolute, MuhDic["PanelRow1Size"]);
+					MidPanel.RowStyles[0] = new RowStyle(SizeType.Absolute, MuhDic["TitlesRowSize"]);
 					for (int i = 1; i < MidPanel.RowStyles.Count; i++)
 					{
-						MidPanel.RowStyles[i] = new RowStyle(SizeType.Percent, muhDic["PlayerRowSize"]);
+						MidPanel.RowStyles[i] = new RowStyle(SizeType.Percent, MuhDic["PlayerRowSize"]);
 					}
 					Panel.Dock = DockStyle.Fill;
 
-					ImaginaryPlayer.ImaginaryName.Text = "Player";
-					ImaginaryPlayer.Kill.Text = "Kill";
-					ImaginaryPlayer.Attack.Text = "Attack";
-					ImaginaryPlayer.HpLost.Text = "HP Lost";
-					ImaginaryPlayer.MpUsage.Text = "MP Usage";
-					ImaginaryPlayer.Picking.Text = "Picking";
-					ImaginaryPlayer.Status.Text = "Status";
+					imaginaryPlayer.ImaginaryName.Text = "Player";
+					imaginaryPlayer.Kill.Text = "Kill";
+					imaginaryPlayer.Attack.Text = "Attack";
+					imaginaryPlayer.HpLost.Text = "HP Lost";
+					imaginaryPlayer.MpUsage.Text = "MP Usage";
+					imaginaryPlayer.Picking.Text = "Picking";
+					imaginaryPlayer.Status.Text = "Status";
 
 					MidTopPanel.ColumnStyles[0] = new ColumnStyle(SizeType.Percent, 19);
 					MidTopPanel.ColumnStyles[1] = new ColumnStyle(SizeType.Percent, 13);

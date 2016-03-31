@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace LF2Dashboard
 {
 	class Player
 	{
 		protected Process GameProcess;
-		protected int playerAddress;
+		protected int PlayerAddress;
 		public int DataAddress;
 		public int Kills;
 		public int Attack;
@@ -25,10 +22,8 @@ namespace LF2Dashboard
 		public int HpDark;
 		public int HpMax;
 		public int Mp;
-		public bool MightBeActive;
 		public bool IsActive;
 		public bool IsAlive;
-		public bool IsWin;
 		public Character Char;
 
 		public string Name;
@@ -36,8 +31,8 @@ namespace LF2Dashboard
 		public Player(Process gameProcess, int px)
 		{
 			GameProcess = gameProcess;
-			playerAddress = BitConverter.ToInt32(
-				Hookers.ReadMemory(GameProcess, AddressTable.Player[px], 4), 0);
+			PlayerAddress = BitConverter.ToInt32(
+				Hooker.ReadMemory(GameProcess, AddressTable.Player[px], 4), 0);
 
 			Name = GetString(11, AddressTable.Names[px]);
 		}
@@ -62,12 +57,12 @@ namespace LF2Dashboard
 
 		protected int GetInt32(int offset)
 		{
-			return BitConverter.ToInt32(Hookers.ReadMemory(GameProcess, playerAddress + offset, 4), 0);
+			return BitConverter.ToInt32(Hooker.ReadMemory(GameProcess, PlayerAddress + offset, 4), 0);
 		}
 
 		protected string GetString(uint size, int address)
 		{
-			var array = Hookers.ReadMemory(GameProcess, address, size);
+			var array = Hooker.ReadMemory(GameProcess, address, size);
 			return Encoding.Default.GetString(array).Trim('\0');
 		}
 
