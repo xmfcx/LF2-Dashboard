@@ -11,7 +11,7 @@ namespace LF2Dashboard
 	{
 		public Character[] Chars;
 		private readonly TableLayoutPanel panel;
-		public StatsPanel.ScoreBoard Board;
+		public ScoreBoard Board;
 		public Process GameProcess;
 		public Player[] Players;
 		public ComPlayer[] CPlayers;
@@ -146,7 +146,7 @@ namespace LF2Dashboard
 
 		public void BuildTable()
 		{
-			Board = new StatsPanel.ScoreBoard(panel, MotherForm);
+			Board = new ScoreBoard(panel, MotherForm);
 			foreach (var player in Players)
 			{
 				if (player.IsActive)

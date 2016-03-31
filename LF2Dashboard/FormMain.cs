@@ -38,8 +38,6 @@ namespace LF2Dashboard
 			}
 		}
 		
-		
-
 		void Restart()
 		{
 			Regex regex = new Regex(@"lf2(.*?)");
