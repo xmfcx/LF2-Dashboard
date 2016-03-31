@@ -15,3 +15,4 @@ D:\Projects\Git\LF2-Dashboard\LF2Dashboard\bin\Debug\LF2Dashboard.pdb
 D:\Projects\Git\LF2-Dashboard\LF2Dashboard\obj\Debug\LF2Dashboard.FormMain.resources
 D:\Projects\Git\LF2-Dashboard\LF2Dashboard\obj\Debug\LF2Dashboard.Properties.Resources.resources
 D:\Projects\Git\LF2-Dashboard\LF2Dashboard\obj\Debug\LF2Dashboard.csproj.GenerateResource.Cache
+D:\Projects\Git\LF2-Dashboard\LF2Dashboard\obj\Debug\LF2Dashboard.csprojResolveAssemblyReference.cache
