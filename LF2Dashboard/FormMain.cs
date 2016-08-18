@@ -43,7 +43,7 @@ namespace LF2Dashboard
 			Regex regex = new Regex(@"lf2(.*?)");
 			foreach (Process p in Process.GetProcesses("."))
 			{
-				if (regex.Match(p.ProcessName).Success)
+				if (regex.Match(p.ProcessName.ToLower()).Success)
 				{
 					game = new Game(p, tableLayoutPanel1, this);
 					lf2IsOn = true;
@@ -59,16 +59,13 @@ namespace LF2Dashboard
 			bool thereIsNoLf2 = true;
 			foreach (Process p in Process.GetProcesses("."))
 			{
-				if (regex.Match(p.ProcessName).Success)
+				if (regex.Match(p.ProcessName.ToLower()).Success)
 				{
 					thereIsNoLf2 = false;
 					break;
 				}
 			}
-			if (thereIsNoLf2)
-			{
-				lf2IsOn = false;
-			}
+			lf2IsOn = !thereIsNoLf2;
 		}
 
 		private void FormMain_KeyPress(object sender, KeyPressEventArgs e)
