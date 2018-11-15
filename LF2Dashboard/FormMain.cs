@@ -20,7 +20,7 @@ namespace LF2Dashboard
     {
       BackColor = Color.Black;
       timerWorker.Enabled = true;
-      timerWorker.Interval = 100;
+      timerWorker.Interval = 10;
       AddressTable.SetTable();
 
       Restart();
