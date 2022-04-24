@@ -112,16 +112,6 @@ namespace LF2Dashboard
 
         if (!weHaveTable)
         {
-          foreach (var player in Players)
-          {
-            player.AttackHistory = new List<Player.Pointo>();
-          }
-
-          foreach (var player in CPlayers)
-          {
-            player.AttackHistory = new List<Player.Pointo>();
-          }
-
           BuildTable();
           Board.StreamIsOn = StreamIsOn;
           MotherForm.Size = new Size(MotherForm.Width, Board.Panel.MaximumSize.Height);
@@ -160,33 +150,6 @@ namespace LF2Dashboard
 
       if (weHaveTable)
       {
-        
-        for (int i = 0; i < Board.Players.Count; i++)
-        {
-          var player = Board.Players[i].Player;
-          var his_atk = player.AttackHistory;
-          Player.Pointo pointo = new Player.Pointo();
-          pointo.t = timyTime;
-          pointo.x = player.Attack;
-          bool willadd = false;
-          if (his_atk.Count == 0)
-          {
-            his_atk.Add(pointo);
-            willadd = true;
-          }
-          else
-          {
-            var atk_last = his_atk[his_atk.Count - 1];
-            if (pointo.t > atk_last.t)
-            {
-              his_atk.Add(pointo);
-              willadd = true;
-            }
-          }
-
-          if (willadd)
-            Board.ChartAddPoint(pointo, i);
-        }
         Board.Update(GameSession);
       }
     }

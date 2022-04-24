@@ -28,14 +28,6 @@ namespace LF2Dashboard
     public bool IsAlive;
     public Character Char;
 
-    public struct Pointo
-    {
-      public int t;
-      public int x;
-    }
-
-    public List<Pointo> AttackHistory;
-
     public string Name;
 
     public Player(Process gameProcess, int px)

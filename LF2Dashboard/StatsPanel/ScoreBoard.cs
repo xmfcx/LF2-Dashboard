@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using LF2Dashboard.Properties;
-using System.Windows.Forms.DataVisualization.Charting;
 
 namespace LF2Dashboard.StatsPanel
 {
@@ -26,8 +25,6 @@ namespace LF2Dashboard.StatsPanel
     private LinkLabel lable;
     private RealPlayer imaginaryPlayer;
     public Form MotherForm;
-    public Chart MainChart;
-    public Dictionary<int, string> DicHart;
 
     public ScoreBoard(TableLayoutPanel panel, Form form)
     {
@@ -35,7 +32,6 @@ namespace LF2Dashboard.StatsPanel
       Time = TimeSpan.Zero;
       Panel = panel;
       Players = new List<RealPlayer>();
-      MainChart = new Chart();
     }
 
     public void BuildTable()
@@ -45,7 +41,7 @@ namespace LF2Dashboard.StatsPanel
       MuhDic.Add("PlayerRowSize", 50);
       MuhDic.Add("TitlesRowSize", 34);
       MuhDic.Add("MidMotherWidth", 8);
-      MuhDic.Add("maxHeight", 120 + Players.Count * 45 + 300);
+      MuhDic.Add("maxHeight", 120 + Players.Count * 45);
 
 
       imaginaryPlayer = new RealPlayer();
@@ -289,42 +285,7 @@ namespace LF2Dashboard.StatsPanel
 
       Panel.Controls.Add(BotPanel, 0, 2);
 
-// Chart!!!
-      MainChart.Dock = DockStyle.Fill;
-      DicHart = new Dictionary<int, string>();
 
-      var colors = new List<Color>();
-      colors.Add(Color.Blue);
-      colors.Add(Color.Red);
-      colors.Add(Color.Green);
-      colors.Add(Color.Yellow);
-      colors.Add(Color.Cyan);
-      colors.Add(Color.Magenta);
-      colors.Add(Color.Gray);
-      colors.Add(Color.Orange);
-      
-      
-      ChartArea chA = new ChartArea();
-      MainChart.ChartAreas.Add(chA);
-
-      for (int i = 0; i < Players.Count; i++)
-      {
-        DicHart[i] = "p" + i.ToString();
-        MainChart.Series.Add(DicHart[i]);
-
-
-        var series = MainChart.Series[DicHart[i]];
-        series.ChartType = SeriesChartType.StackedArea100;
-        series.DeleteCustomProperty("LineTension");
-        series.Color = colors[i];
-        series.BorderColor = Color.FromArgb(((int) (((byte) (180)))), ((int) (((byte) (26)))), ((int) (((byte) (59)))),
-          ((int) (((byte) (105)))));
-        series.LabelFormat = "C";
-        series.Name = DicHart[i];
-      }
-
-
-      Panel.Controls.Add(MainChart, 0, 3);
 
       MidMotherPanel.CellPaint += MidPanelOnCellPaint;
       MidPanel.CellPaint += MidPanelOnCellPaint;
@@ -459,12 +420,6 @@ namespace LF2Dashboard.StatsPanel
 
         StreamIsOnChanged = false;
       }
-    }
-
-    public void ChartAddPoint(Player.Pointo pointo, int indPlayer)
-    {
-      var series = MainChart.Series[DicHart[indPlayer]];
-      series.Points.AddXY(pointo.t, pointo.x);
     }
   }
 }
