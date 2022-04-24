@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Text.RegularExpressions;
@@ -10,36 +11,38 @@ namespace LF2Dashboard
   {
     public FormMain()
     {
+      _dashboardIsOnline = false;
       InitializeComponent();
     }
 
-    private Game game;
-    private bool lf2IsOn;
+    private Game _game;
+    private bool _dashboardIsOnline;
 
     private void FormMain_Load(object sender, EventArgs e)
     {
       BackColor = Color.Black;
       timerWorker.Enabled = true;
-      timerWorker.Interval = 10;
-      AddressTable.SetTable();
+      timerWorker.Interval = 1;
+      AddressTable.Init();
 
-      Restart();
+      ReinitializeDashboard();
     }
 
     private void timerWorker_Tick(object sender, EventArgs e)
     {
-      CheckLf2();
-      if (lf2IsOn)
+      var lf2Process = TryGetLf2Process();
+      var lf2IsOff = lf2Process == null;
+      if (!lf2IsOff)
       {
-        game.Update();
+        ReinitializeDashboard();
       }
       else
       {
-        Restart();
+        _game.Update();
       }
     }
 
-    void Restart()
+    void ReinitializeDashboard()
     {
       Regex regex = new Regex(@"lf2(.*?)");
       foreach (Process p in Process.GetProcesses("."))
@@ -47,49 +50,51 @@ namespace LF2Dashboard
         var name = p.ProcessName.ToLower();
         if (name != "lf2dashboard" && regex.Match(name).Success)
         {
-          game = new Game(p, tableLayoutPanel1, this);
-          lf2IsOn = true;
+          _game = new Game(p, tableLayoutPanel1, this);
+          _lf2IsOn = true;
           break;
         }
 
-        lf2IsOn = false;
+        _lf2IsOn = false;
       }
     }
 
-    private void CheckLf2()
+    private Process? TryGetLf2Process()
     {
+      Process? lf2Process = null;
       var regex = new Regex(@"lf2(.*?)");
       foreach (var p in Process.GetProcesses("."))
       {
         var name = p.ProcessName.ToLower();
         if (name == "lf2dashboard" || !regex.Match(name).Success)
           continue;
-        lf2IsOn = true;
-        return;
+        lf2Process = p;
       }
+
+      return lf2Process;
     }
 
     private void FormMain_KeyPress(object sender, KeyPressEventArgs e)
     {
-      if (lf2IsOn)
+      if (_lf2IsOn)
       {
         if (e.KeyChar.ToString().ToLower() == "s")
         {
-          if (game.GameIsOn)
+          if (_game.GameIsOn)
           {
-            if (game.Board.StreamIsOn)
+            if (_game.Board.StreamIsOn)
             {
-              game.StreamIsOn = false;
-              game.Board.StreamIsOn = false;
+              _game.StreamIsOn = false;
+              _game.Board.StreamIsOn = false;
             }
             else
             {
-              game.StreamIsOn = true;
-              game.Board.StreamIsOn = true;
+              _game.StreamIsOn = true;
+              _game.Board.StreamIsOn = true;
               Console.Write("IT'S ON!");
             }
 
-            game.Board.StreamIsOnChanged = true;
+            _game.Board.StreamIsOnChanged = true;
           }
         }
       }

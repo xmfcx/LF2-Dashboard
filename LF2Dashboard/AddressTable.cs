@@ -35,7 +35,7 @@ namespace LF2Dashboard
 		public static readonly int Time = 0x450BBC;
 		public static readonly int TotalTime = 0x450B8C;
 
-		public static void SetTable()
+		public static void Init()
 		{
 			Player = new int[8];
 			Computer = new int[8];
